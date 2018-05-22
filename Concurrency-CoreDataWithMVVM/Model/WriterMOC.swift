@@ -62,11 +62,11 @@ class WriterMOC {
         guard context.hasChanges else { return }
         
         do {
-            print("worker started")
+            print("writer started")
             try context.save()
-            print("worker ended")
+            print("writer ended")
         } catch let nserror as NSError {
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            fatalError("writer error \(nserror), \(nserror.userInfo)")
         }
     }
 }

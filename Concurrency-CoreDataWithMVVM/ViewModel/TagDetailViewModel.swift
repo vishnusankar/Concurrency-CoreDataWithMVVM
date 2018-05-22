@@ -11,24 +11,24 @@ import CoreData
 
 class TagDetailViewModel {
     
-    private let writerMOC : WriterMOC
+    private let mainMOC : MainMOC
     private var currentTagObjectId : NSManagedObjectID
     var tagObject : TagEntity
     
-    init(currentTag : NSManagedObjectID, writerMOC : WriterMOC) {
+    init(currentTag : NSManagedObjectID, writerMOC : MainMOC) {
         self.currentTagObjectId = currentTag
-        self.writerMOC = writerMOC
+        self.mainMOC = writerMOC
         
         do {
-            tagObject = try writerMOC.getContext().existingObject(with: currentTagObjectId) as! TagEntity
+            tagObject = try mainMOC.getContext().existingObject(with: currentTagObjectId) as! TagEntity
         } catch _ as NSError {
             fatalError("Selected object ID not available at context")
         }
     }
     
     func saveContext() {
-        if self.writerMOC.getContext().hasChanges == true {
-            self.writerMOC.saveWriterContext()
+        if self.mainMOC.getContext().hasChanges == true {
+            self.mainMOC.saveMainContext()
         }
         
     }

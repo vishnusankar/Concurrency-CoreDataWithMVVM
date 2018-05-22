@@ -22,8 +22,9 @@ class TagListViewController : UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.tagViewListModels = TagViewListModel(managedObjectContext: CoreDataHelper().mainMOC, delegate: self)
+        
         mainManagedObjectContext = MainMOC(parentContext: self.writerMOC.getContext())
+        self.tagViewListModels = TagViewListModel(managedObjectContext: (mainManagedObjectContext?.getContext())!, delegate: self)
         self.workerMOC = WorkerMOC(parentContext: self.writerMOC.getContext())
     }
 
@@ -103,14 +104,12 @@ class TagListViewController : UIViewController {
         let viewCont = segue.destination as! TagDetailViewController
         if let selectedCell = sender as? UITableViewCell {
             let view = selectedCell.contentView.subviews
-//            if let label = view.first as? UILabel {
-//                viewCont.tagTextField.text = label.text!
-//            }
+
             if let indexPath = self.tableView.indexPath(for: selectedCell) {
                 let selectedTag = self.tagViewListModels?.cellRowAtIndexPath(indexPath: indexPath)
                 
                 do {
-                    let tagDetailViewModelObj = TagDetailViewModel(currentTag: (selectedTag?.objectID)!, writerMOC: writerMOC)
+                    let tagDetailViewModelObj = TagDetailViewModel(currentTag: (selectedTag?.objectID)!, writerMOC: mainManagedObjectContext!)
                     viewCont.tagDetailViewModel = tagDetailViewModelObj
                     
                 } catch let error as NSError {

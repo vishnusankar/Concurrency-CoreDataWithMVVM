@@ -48,9 +48,9 @@ class MainMOC {
             
             self.parentContext.perform({
                 do {
-                    print("writer started")
+                    print("main - writer started")
                     try self.parentContext.save()
-                    print("writer Ended")
+                    print("main - writer Ended")
                 } catch let nserror as NSError {
                     fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
                 }

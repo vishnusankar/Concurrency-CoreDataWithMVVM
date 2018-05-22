@@ -46,9 +46,9 @@ class WorkerMOC {
         
         self.parentContext.perform({
             do {
-                print("writer started")
+                print("worker - writer started")
                 try self.parentContext.save()
-                print("writer Ended")
+                print("worker - writer Ended")
             } catch let nserror as NSError {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
